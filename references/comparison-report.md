@@ -1,4 +1,4 @@
-# ecoMode vs Caveman
+# ecoMode vs Upstream Baseline
 
 Benchmark command:
 
@@ -8,20 +8,20 @@ python scripts/benchmark_compare.py --cases tests/benchmark_cases.json
 
 Latest expanded local result:
 
-- upstream caveman SHA: `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`
+- upstream SHA: `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`
 - cases: 16
 - ecoMode wins: 16/16
 - exact preservation: 16/16
-- caveman tokens: 513
+- baseline tokens: 513
 - ecoMode tokens: 252
 - ecoMode advantage: 261 tokens
-- caveman savings vs normal: 29.9%
+- baseline savings vs normal: 29.9%
 - ecoMode savings vs normal: 65.6%
-- core skill instruction tokens: caveman 1245, ecoMode 1049
+- core skill instruction tokens: baseline 1245, ecoMode 1049
 
 ## Why ecoMode Wins
 
-Caveman compresses sentence style. ecoMode removes unnecessary ideas first, then
+The upstream baseline compresses sentence style. ecoMode removes unnecessary ideas first, then
 compresses wording. This makes whole-answer output smaller while staying easier
 to read.
 

@@ -4,7 +4,7 @@ description: >
   Token-saving communication and response-design skill for ultra-compact answers
   that remain understandable. Use when the user asks for ecoMode, /ecomode,
   /ecomode max, token saving, low-token replies, 90% shorter answers, concise
-  explanations, compressed summaries, "better than caveman", or a tool/skill that
+  explanations, compressed summaries, "better than baseline", or a tool/skill that
   reduces output tokens while preserving accuracy.
 ---
 
@@ -142,7 +142,7 @@ Say "up to 90%" or "target 90%" unless measured with `scripts/estimate_savings.p
 
 ## Benchmark Contract
 
-ecoMode should beat caveman when both are safe:
+ecoMode should beat compact-output baselines when both are safe:
 
 - fewer or equal tokens for same answer
 - more natural professional tone
@@ -151,16 +151,16 @@ ecoMode should beat caveman when both are safe:
 - clearer next action
 - honest measurement language
 
-If caveman would be shorter but less clear, prefer clarity and mark the tradeoff.
+If a baseline would be shorter but less clear, prefer clarity and mark the tradeoff.
 
 ## Resources
 
 - Read `references/playbook.md` when tuning prompts, modes, or behavior.
 - Read `references/examples.md` when adding examples or testing output quality.
 - Read `references/evaluation.md` when judging whether ecoMode beat another style.
-- Read `references/comparison-report.md` for current local caveman comparison.
+- Read `references/comparison-report.md` for current local baseline comparison.
 - Use `scripts/estimate_savings.py` to measure before/after token savings.
-- Use `scripts/benchmark_compare.py` to compare ecoMode vs caveman fixtures.
+- Use `scripts/benchmark_compare.py` to compare ecoMode vs baseline fixtures.
 - Use `scripts/eco_lint.py` to flag filler, unsafe claims, and exact-text risks.
 
 ## Final Self-Check

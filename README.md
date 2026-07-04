@@ -3,11 +3,10 @@
 Ultra-compact communication skill for Codex. ecoMode is built to save output
 tokens while keeping answers understandable, professional, and technically exact.
 
-It is inspired by the same problem space as
-[`JuliusBrussee/caveman`](https://github.com/JuliusBrussee/caveman), but uses a
-different strategy:
+It is inspired by the same problem space as an existing upstream compression
+skill, but uses a different strategy:
 
-- caveman compresses sentence style
+- upstream baseline compresses sentence style
 - ecoMode removes unnecessary meaning first, then compresses wording
 
 That makes ecoMode shorter on the included benchmark while avoiding roleplay
@@ -15,17 +14,17 @@ voice.
 
 ## Results
 
-Tested against upstream `JuliusBrussee/caveman` main:
+Tested against upstream baseline main:
 
 ```text
-caveman SHA: 0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0
+upstream SHA: 0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0
 benchmark cases: 16
 ecoMode wins: 16/16
 exact preservation: 16/16
-caveman tokens: 513
+baseline tokens: 513
 ecoMode tokens: 252
 ecoMode advantage: 261 fewer tokens
-caveman savings vs normal: 29.9%
+baseline savings vs normal: 29.9%
 ecoMode savings vs normal: 65.6%
 benchmark_pass: yes
 ```
@@ -33,19 +32,19 @@ benchmark_pass: yes
 Core skill instruction overhead:
 
 ```text
-caveman SKILL.md: 1245 tokens
+baseline SKILL.md: 1245 tokens
 ecoMode SKILL.md: 1049 tokens
 ecoMode saves 196 instruction tokens
 ```
 
 Full report:
 
-- [Upstream caveman comparison](UPSTREAM_CAVEMAN_COMPARISON_REPORT.md)
+- [Upstream baseline comparison](UPSTREAM_CAVEMAN_COMPARISON_REPORT.md)
 - [Benchmark report](BENCHMARK_REPORT.md)
 
 ## Honest Claim
 
-ecoMode beats upstream caveman on the included 16-case local benchmark.
+ecoMode beats the upstream baseline on the included 16-case local benchmark.
 
 It is not proven to be the best compression skill in the world. That would need
 a larger independent benchmark across many real tasks, models, languages, and

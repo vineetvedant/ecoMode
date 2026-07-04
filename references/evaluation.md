@@ -1,6 +1,6 @@
 # ecoMode Evaluation
 
-Use this to judge whether ecoMode output is better than caveman output.
+Use this to judge whether ecoMode output is better than an upstream compact-output baseline.
 
 ## Scorecard
 
@@ -36,7 +36,7 @@ Fail output if it:
 - uses roleplay voice
 - drops reason user needs to trust answer
 
-## Comparison To Caveman
+## Comparison To Baseline
 
 ecoMode should win by:
 
@@ -47,7 +47,7 @@ ecoMode should win by:
 - clarity gates
 - exact-text protection
 
-Caveman may be shorter sentence-by-sentence, but ecoMode should be shorter for
+The baseline may be shorter sentence-by-sentence, but ecoMode should be shorter for
 whole-answer cost by omitting irrelevant content.
 
 ## Benchmark Command
@@ -63,4 +63,4 @@ Pass target:
 - ecoMode wins every case or reports intentional safety tradeoff
 - exact preservation 100%
 - no filler lint issues
-- average token saving vs normal is stronger than caveman
+- average token saving vs normal is stronger than baseline

@@ -2,7 +2,7 @@
 
 ## Principle
 
-ecoMode compresses meaning, not grammar. It beats caveman-style compression by
+ecoMode compresses meaning, not grammar. It beats grammar-first compression by
 removing unneeded information instead of making every sentence sound broken.
 
 State of art for this skill means:
@@ -72,9 +72,9 @@ eco:
 eco max:
 > Guard loading state before call.
 
-## Beating Caveman
+## Beating Baseline
 
-Caveman saves tokens mainly by dropping grammar. ecoMode should first remove
+The baseline saves tokens mainly by dropping grammar. ecoMode should first remove
 entire unneeded ideas.
 
 Priority:
@@ -87,7 +87,7 @@ Priority:
 
 Example:
 
-Caveman:
+Baseline:
 > Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:
 
 ecoMode:

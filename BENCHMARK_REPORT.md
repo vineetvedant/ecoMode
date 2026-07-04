@@ -7,15 +7,15 @@ Tokenizer: `tiktoken:gpt-4o-mini`
 
 ## Summary
 
-ecoMode beats caveman on the current local benchmark suite.
+ecoMode beats the upstream baseline on the current local benchmark suite.
 
-| Metric | Caveman | ecoMode |
+| Metric | Baseline | ecoMode |
 |--------|---------|---------|
-| Total tokens | 127 | 89 |
-| Savings vs normal | 43.8% | 60.6% |
-| Case wins | - | 6/6 |
-| Exact preservation | - | 6/6 |
-| Token advantage | - | 38 fewer than caveman |
+| Total tokens | 513 | 252 |
+| Savings vs normal | 29.9% | 65.6% |
+| Case wins | - | 16/16 |
+| Exact preservation | - | 16/16 |
+| Token advantage | - | 261 fewer than baseline |
 
 Result: `benchmark_pass: yes`
 
@@ -30,19 +30,19 @@ python scripts/benchmark_compare.py --cases tests/benchmark_cases.json
 The benchmark compares three outputs for each case:
 
 - `normal`: verbose baseline answer
-- `caveman`: caveman-style compressed answer
+- `caveman`: upstream baseline compressed answer
 - `ecomode`: ecoMode compressed answer
 
 Each case checks:
 
 - token count
-- ecoMode token advantage over caveman
+- ecoMode token advantage over baseline
 - required term preservation
 - per-case win/loss
 
 ## Case Results
 
-| Case | Normal | Caveman | ecoMode | ecoMode Advantage | Saved vs Normal | Exact | Win |
+| Case | Normal | Baseline | ecoMode | ecoMode Advantage | Saved vs Normal | Exact | Win |
 |------|--------|---------|---------|-------------------|-----------------|-------|-----|
 | react-rerender | 39 | 22 | 14 | 8 | 64.1% | yes | yes |
 | db-pooling | 31 | 16 | 11 | 5 | 64.5% | yes | yes |
@@ -50,6 +50,16 @@ Each case checks:
 | deploy-order | 40 | 21 | 18 | 3 | 55.0% | yes | yes |
 | review-double-charge | 43 | 22 | 18 | 4 | 58.1% | yes | yes |
 | destructive-sql | 28 | 21 | 16 | 5 | 42.9% | yes | yes |
+| tcp-udp | 59 | 64 | 15 | 49 | 74.6% | yes | yes |
+| node-memory-leak | 70 | 45 | 22 | 23 | 68.6% | yes | yes |
+| sql-explain | 54 | 40 | 24 | 16 | 55.6% | yes | yes |
+| hash-collisions | 46 | 39 | 14 | 25 | 69.6% | yes | yes |
+| cors-error | 53 | 40 | 17 | 23 | 67.9% | yes | yes |
+| debounce-search | 50 | 41 | 16 | 25 | 68.0% | yes | yes |
+| git-rebase-merge | 47 | 38 | 15 | 23 | 68.1% | yes | yes |
+| queue-topic | 50 | 32 | 16 | 16 | 68.0% | yes | yes |
+| sql-injection-review | 37 | 24 | 13 | 11 | 64.9% | yes | yes |
+| spanish-pooling | 40 | 23 | 11 | 12 | 72.5% | yes | yes |
 
 ## Sample 90% Target Check
 
@@ -74,7 +84,7 @@ The skill correctly treats 90% as an "up to / target" claim unless measured.
 
 ## Why ecoMode Wins
 
-Caveman compresses sentence style. ecoMode removes unnecessary ideas first.
+The upstream baseline compresses sentence style. ecoMode removes unnecessary ideas first.
 
 ecoMode advantages:
 

@@ -101,18 +101,50 @@ Maximum compression:
 Use ecoMode max. Explain why my React component re-renders.
 ```
 
-## Install For Codex
+## Install
 
-Copy this folder into your Codex skills directory:
+ecoMode is a plain `SKILL.md` folder. That makes it portable across tools that
+support local agent skills.
+
+Compatibility notes:
+
+- Codex uses `~/.codex/skills/<skill-name>` in this project setup.
+- Claude Code personal skills use `~/.claude/skills/<skill-name>/SKILL.md`.
+- Claude.ai custom skills can be uploaded as zip files.
+- VS Code agent skills can live in `.github/skills/` inside a repository.
+
+References:
+
+- [Claude Code skills](https://code.claude.com/docs/en/skills)
+- [Claude Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+- [VS Code agent skills](https://code.visualstudio.com/docs/agent-customization/agent-skills)
+
+### Codex
 
 ```powershell
-Copy-Item -Path . -Destination "$env:USERPROFILE\.codex\skills\ecomode" -Recurse -Force
+git clone https://github.com/vineetvedant/ecoMode.git
+cd ecoMode
+.\install.ps1 -Target codex -Force
 ```
 
-Restart Codex, then invoke:
+macOS/Linux:
+
+```bash
+git clone https://github.com/vineetvedant/ecoMode.git
+cd ecoMode
+bash install.sh --target codex --force
+```
+
+Installs to:
 
 ```text
-[$ecomode](C:\Users\YOUR_NAME\.codex\skills\ecomode\SKILL.md) explain git rebase vs merge
+~/.codex/skills/ecomode
+```
+
+Restart Codex, then use:
+
+```text
+[$ecomode](~/.codex/skills/ecomode/SKILL.md) explain git rebase vs merge
 ```
 
 Or use natural language:
@@ -121,12 +153,123 @@ Or use natural language:
 Use ecoMode. Save tokens. Review this diff.
 ```
 
+### Claude Code
+
+Claude Code supports custom skills as folders under `~/.claude/skills/<name>`
+with a `SKILL.md` file.
+
+Windows:
+
+```powershell
+git clone https://github.com/vineetvedant/ecoMode.git
+cd ecoMode
+.\install.ps1 -Target claude -Force
+```
+
+macOS/Linux:
+
+```bash
+git clone https://github.com/vineetvedant/ecoMode.git
+cd ecoMode
+bash install.sh --target claude --force
+```
+
+Installs to:
+
+```text
+~/.claude/skills/ecomode
+```
+
+Restart Claude Code, then invoke:
+
+```text
+/ecomode explain database pooling
+```
+
+### Install Everywhere Local
+
+```powershell
+.\install.ps1 -Target all -Force
+```
+
+```bash
+bash install.sh --target all --force
+```
+
+This installs to:
+
+- `~/.codex/skills/ecomode`
+- `~/.claude/skills/ecomode`
+- `./.github/skills/ecomode`
+
+### Claude.ai Upload
+
+Create a zip:
+
+```bash
+python scripts/package_skill.py --out ecomode-skill.zip
+```
+
+Upload `ecomode-skill.zip` through Claude.ai custom skill settings.
+
+### VS Code Workspace Skills
+
+Install into the current repository:
+
+```bash
+bash install.sh --target vscode --force
+```
+
+or:
+
+```powershell
+.\install.ps1 -Target vscode -Force
+```
+
+Installs to:
+
+```text
+.github/skills/ecomode
+```
+
+### Manual Install
+
+Copy the full `ecoMode` folder to any skill directory your agent scans, keeping
+this shape:
+
+```text
+skills/
+└── ecomode/
+    ├── SKILL.md
+    ├── references/
+    ├── scripts/
+    └── tests/
+```
+
+### Uninstall
+
+```bash
+bash uninstall.sh codex
+bash uninstall.sh claude
+bash uninstall.sh vscode
+```
+
+```powershell
+.\uninstall.ps1 -Target codex
+.\uninstall.ps1 -Target claude
+.\uninstall.ps1 -Target vscode
+```
+
 ## Repository Layout
 
 ```text
 ecomode/
 ├── SKILL.md
 ├── README.md
+├── install.sh
+├── install.ps1
+├── uninstall.sh
+├── uninstall.ps1
 ├── BENCHMARK_REPORT.md
 ├── UPSTREAM_CAVEMAN_COMPARISON_REPORT.md
 ├── agents/
@@ -139,7 +282,8 @@ ecomode/
 ├── scripts/
 │   ├── benchmark_compare.py
 │   ├── eco_lint.py
-│   └── estimate_savings.py
+│   ├── estimate_savings.py
+│   └── package_skill.py
 └── tests/
     ├── benchmark_cases.json
     ├── eco_outputs.txt

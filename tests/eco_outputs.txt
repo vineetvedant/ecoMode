@@ -1,0 +1,5 @@
+`useMemo` inline object prop; stable ref stops re-render.
+
+Pool reuses DB connections; skips per-request handshake.
+
+Use `<=` for token expiry; add boundary test.

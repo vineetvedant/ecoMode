@@ -1,0 +1,7 @@
+interface:
+  display_name: "ecoMode"
+  short_description: "Ultra-compact answers with clarity gates."
+  default_prompt: "Use $ecomode to answer with maximum token efficiency while preserving accuracy and understanding."
+
+policy:
+  allow_implicit_invocation: true

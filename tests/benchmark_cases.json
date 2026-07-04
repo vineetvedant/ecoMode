@@ -1,0 +1,114 @@
+[
+  {
+    "id": "react-rerender",
+    "normal": "Your React component re-renders because you create a new object reference each render and pass it as a prop. Wrap the object creation in useMemo so the reference stays stable unless its dependencies change.",
+    "caveman": "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`.",
+    "ecomode": "`useMemo` inline object prop; stable ref stops re-render.",
+    "must_include": ["useMemo", "ref", "re-render"]
+  },
+  {
+    "id": "db-pooling",
+    "normal": "Connection pooling reuses open database connections instead of creating a brand new connection for every request. This avoids repeated handshake overhead and reduces spikes in database connection count.",
+    "caveman": "Pool reuse open DB connections. No new connection per request. Skip handshake overhead.",
+    "ecomode": "Pool reuses DB connections; skips per-request handshake.",
+    "must_include": ["DB", "handshake"]
+  },
+  {
+    "id": "auth-expiry",
+    "normal": "The authentication middleware has a boundary bug because the token expiry comparison uses less-than instead of less-than-or-equal. A token that expires exactly at the current timestamp can still pass. Change the comparison and add a boundary test.",
+    "caveman": "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix: use `<=`, add boundary test.",
+    "ecomode": "Use `<=` for token expiry; add boundary test.",
+    "must_include": ["<=", "token", "boundary test"]
+  },
+  {
+    "id": "deploy-order",
+    "normal": "To deploy this safely, first apply the database migration in staging, then test the application against the new schema, deploy the application code, monitor errors, and only after that remove the old compatibility path.",
+    "caveman": "Safe deploy order: migrate staging, test app, deploy code, monitor errors, remove old compatibility path.",
+    "ecomode": "Order: migrate staging, test app, deploy code, monitor errors, remove old path.",
+    "must_include": ["migrate staging", "test app", "deploy code", "monitor errors"]
+  },
+  {
+    "id": "review-double-charge",
+    "normal": "In src/payments.ts on line 88, the charge operation can be executed twice when a retry happens after a network timeout. Add an idempotency key so the payment provider can safely deduplicate repeated attempts.",
+    "caveman": "src/payments.ts:88: bug: charge can run twice on retry. Add idempotency key.",
+    "ecomode": "src/payments.ts:88: double charge on retry. Add idempotency key.",
+    "must_include": ["src/payments.ts:88", "idempotency key"]
+  },
+  {
+    "id": "destructive-sql",
+    "normal": "This command permanently deletes all rows in the users table and cannot be undone. Verify that you have a recent backup before running DELETE FROM users.",
+    "caveman": "Warning: permanently deletes all rows in `users`; cannot undo. Verify backup before `DELETE FROM users`.",
+    "ecomode": "Warning: `DELETE FROM users` permanently deletes all users. Verify backup first.",
+    "must_include": ["DELETE FROM users", "Warning", "backup"]
+  },
+  {
+    "id": "tcp-udp",
+    "normal": "TCP is connection-oriented, reliable, and ordered. It establishes a handshake, retransmits lost packets, preserves sequence, and handles flow and congestion control. UDP is connectionless and best-effort with no handshake, no retransmission, and no ordering, which makes it lower latency but less reliable.",
+    "caveman": "TCP: connection-based. Handshake, ordered, reliable, retransmit lost packets, flow/congestion control. Slower. Use: web, SSH, files. UDP: connectionless. No handshake, no order, no retransmit. Fast, low overhead. Use: video, games, DNS, VoIP.",
+    "ecomode": "TCP = reliable ordered stream. UDP = faster best-effort datagrams.",
+    "must_include": ["TCP", "UDP", "reliable", "best-effort"]
+  },
+  {
+    "id": "node-memory-leak",
+    "normal": "To fix a memory leak in a long-running Node.js process, first profile the heap using node --inspect and Chrome DevTools, take snapshots over time, compare retained objects, and then check common causes such as unbounded Maps, event listeners that are never removed, closures holding large objects, timers that are not cleared, and promises that never settle.",
+    "caveman": "Find leak: run `node --inspect`, take heap snapshots, compare Retained Size. Common causes: unbounded caches/Maps, event listeners not removed, closures holding big objects, timers never cleared, promises never resolve.",
+    "ecomode": "Use `node --inspect`; diff heap snapshots. Check caches, listeners, closures, timers, stuck promises.",
+    "must_include": ["node --inspect", "heap snapshots", "caches", "listeners"]
+  },
+  {
+    "id": "sql-explain",
+    "normal": "The SQL EXPLAIN command shows the query execution plan, including scan type, join strategy, estimated rows, cost estimates, and operation order. EXPLAIN ANALYZE runs the query and shows actual timing and row counts so you can compare planner estimates against reality.",
+    "caveman": "EXPLAIN show query plan. Reveal scan type, join strategy, row estimates, cost, order. `EXPLAIN ANALYZE` actually run query + show real time + real rows.",
+    "ecomode": "`EXPLAIN` shows plan; `EXPLAIN ANALYZE` runs it with real time/rows.",
+    "must_include": ["EXPLAIN", "EXPLAIN ANALYZE", "plan", "real"]
+  },
+  {
+    "id": "hash-collisions",
+    "normal": "Hash tables handle collisions mainly with separate chaining, where each bucket stores a list or tree of entries, or open addressing, where the table probes for another empty slot using strategies such as linear probing, quadratic probing, or double hashing.",
+    "caveman": "Two main way: chaining = bucket hold list/tree; collision append. Open addressing = collide, probe next slot. Variants: linear, quadratic, double hash. High load factor -> resize.",
+    "ecomode": "Collisions: chaining stores bucket lists; open addressing probes another slot.",
+    "must_include": ["chaining", "open addressing", "probes"]
+  },
+  {
+    "id": "cors-error",
+    "normal": "CORS errors happen when the browser blocks a cross-origin response because the server did not return Access-Control-Allow-Origin or related headers that permit the frontend origin. Common fixes include enabling CORS middleware, handling OPTIONS preflight requests, and using an explicit origin with credentials.",
+    "caveman": "CORS = server no send `Access-Control-Allow-Origin` header match your origin. Browser block response. Fix: CORS middleware, origin allowlist, OPTIONS preflight, credentials need explicit origin.",
+    "ecomode": "Server must return `Access-Control-Allow-Origin`; handle OPTIONS; credentials need explicit origin.",
+    "must_include": ["Access-Control-Allow-Origin", "OPTIONS", "credentials"]
+  },
+  {
+    "id": "debounce-search",
+    "normal": "A debouncer waits until the user stops typing for a short delay before running the search. This avoids sending a request on every keystroke, reduces backend load and cost, prevents flickering results, and reduces race conditions from out-of-order responses.",
+    "caveman": "Debouncer delay fn call until user stop typing. Without: every keystroke -> API hit -> spam backend, race conditions, laggy UI. With: wait ~300ms idle -> one request.",
+    "ecomode": "Debounce waits for typing pause; one search, fewer requests, fewer races.",
+    "must_include": ["Debounce", "pause", "requests", "races"]
+  },
+  {
+    "id": "git-rebase-merge",
+    "normal": "Merge combines branches with a merge commit and preserves the existing branch history. Rebase replays your commits on top of another branch, creating a linear history but rewriting commit hashes. Use rebase for local cleanup and merge for shared branches.",
+    "caveman": "Merge = combine branches, make merge commit, preserve history. Rebase = replay commits on target, rewrite SHAs, linear history. Rule: merge shared/public, rebase local cleanup.",
+    "ecomode": "Merge preserves shared history. Rebase rewrites local commits for linear history.",
+    "must_include": ["Merge", "Rebase", "shared", "local"]
+  },
+  {
+    "id": "queue-topic",
+    "normal": "A queue is point-to-point messaging where each message is processed by one consumer, which is useful for work distribution and background jobs. A topic is publish-subscribe messaging where each subscriber receives a copy, which is useful for event broadcasting and fan-out.",
+    "caveman": "Queue = point-to-point. One msg -> one consumer. Work distribution. Topic = pub/sub. One msg -> many subscribers. Event broadcast, fan-out.",
+    "ecomode": "Queue: one message, one consumer. Topic: one message, many subscribers.",
+    "must_include": ["Queue", "one consumer", "Topic", "many subscribers"]
+  },
+  {
+    "id": "sql-injection-review",
+    "normal": "This Express route is vulnerable to SQL injection because it interpolates req.params.id directly into the SQL string. Use a parameterized query and validate the id before passing it to the database.",
+    "caveman": "Security bug: SQL injection. `req.params.id` interpolated into query. Use parameterized query + validate id.",
+    "ecomode": "SQL injection: parameterize `req.params.id`; validate id.",
+    "must_include": ["SQL injection", "req.params.id", "validate"]
+  },
+  {
+    "id": "spanish-pooling",
+    "normal": "Un pool de conexiones reutiliza conexiones abiertas a la base de datos en lugar de abrir una conexión nueva para cada request. Esto evita el costo del handshake y reduce la carga en la base de datos.",
+    "caveman": "Pool = reusar conexiones BD abiertas. Evita handshake TCP + auth por cada request. Menos carga BD.",
+    "ecomode": "Pool reutiliza conexiones BD; evita handshake por request.",
+    "must_include": ["Pool", "BD", "handshake"]
+  }
+]

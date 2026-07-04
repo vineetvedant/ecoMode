@@ -1,0 +1,1 @@
+The bug is caused by the authentication middleware attempting to access the email property on a user object before verifying that the database lookup actually returned a user. If the user does not exist, this results in a null reference error. You should add a guard clause after the lookup and return a 401 response before accessing the email property.
